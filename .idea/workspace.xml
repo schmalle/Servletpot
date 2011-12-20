@@ -62,7 +62,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/metams/ServletPot/Database/Redis.java" line="382" class="org.metams.ServletPot.Database.Redis" package="org.metams.ServletPot.Database">
+      <breakpoint url="file://$PROJECT_DIR$/src/org/metams/ServletPot/Database/Redis.java" line="383" class="org.metams.ServletPot.Database.Redis" package="org.metams.ServletPot.Database">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -185,7 +185,7 @@
       <file leaf-file-name="Redis.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/metams/ServletPot/Database/Redis.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="39" selection-start="519" selection-end="519" vertical-scroll-proportion="0.54112554">
+            <state line="31" column="4" selection-start="520" selection-end="520" vertical-scroll-proportion="0.56277055">
               <folding />
             </state>
           </provider>
@@ -271,10 +271,10 @@
         <option value="$PROJECT_DIR$/importredis.sh" />
         <option value="$PROJECT_DIR$/web/WEB-INF/strings.txt" />
         <option value="$PROJECT_DIR$/src/org/metams/ServletPot/tools/ImporterRedis.java" />
-        <option value="$PROJECT_DIR$/src/org/metams/ServletPot/Database/Redis.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/index.html" />
         <option value="$PROJECT_DIR$/src/org/metams/ServletPot/plugins/Sender.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/config.txt" />
+        <option value="$PROJECT_DIR$/src/org/metams/ServletPot/Database/Redis.java" />
       </list>
     </option>
   </component>
@@ -542,7 +542,7 @@
     <property name="GenerateAntBuildDialog.generateSingleFile" value="true" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="settings.github" />
+    <property name="options.lastSelected" value="preferences.pluginManager" />
     <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="false" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="project.structure.side.proportion" value="0.20000002" />
@@ -1306,7 +1306,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/metams/ServletPot/Database/Redis.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="39" selection-start="519" selection-end="519" vertical-scroll-proportion="0.54112554">
+        <state line="31" column="4" selection-start="520" selection-end="520" vertical-scroll-proportion="0.56277055">
           <folding />
         </state>
       </provider>
