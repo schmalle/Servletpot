@@ -30,6 +30,7 @@ public class Redis implements DBAccess
 	}
 
 
+
 	/**
 	 * database open
 	 *
