@@ -1,0 +1,11 @@
+[Local_PHP_Execution_GET]
+/phpmyadmin/config/config.inc.php?p=
+[Local_PHP_Execution_POST]
+/contact.php
+[SQL_Injection]
+[Local_File_Inclusion]
+/page.php?pag=....//....//
+/modules/agendax/addevent.inc.php?agendax_path=....//
+/default.php?page=....//....//
+/send_reminders.php?includedir=....//
+

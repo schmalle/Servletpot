@@ -1,0 +1,27 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Flake Remote" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote" APPLICATION_SERVER_NAME="Tomcat 6">
+    <option name="LOCAL" value="false" />
+    <option name="OPEN_IN_BROWSER" value="false" />
+    <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/" />
+    <option name="UPDATING_POLICY" value="hot-swap-classes" />
+    <deployment />
+    <server-settings>
+      <option name="DEPLOY_TOMCAT_MANAGER" value="false" />
+      <option name="BASE_DIRECTORY_NAME" value="Unnamed_ServletPot18b3707e" />
+    </server-settings>
+    <log_file path="$PROJECT_DIR$/../../Library/Caches/IntelliJIdea90/tomcat/Unnamed_ServletPot18b3707e/logs/localhost*" checked="true" skipped="true" show_all="false" alias="Tomcat Log" />
+    <RunnerSettings RunnerId="Debug">
+      <option name="DEBUG_PORT" value="61433" />
+      <option name="TRANSPORT" value="0" />
+      <option name="LOCAL" value="false" />
+    </RunnerSettings>
+    <RunnerSettings RunnerId="Run" />
+    <ConfigurationWrapper RunnerId="Debug" />
+    <ConfigurationWrapper RunnerId="Run" />
+    <method>
+      <option name="BuildArtifacts" enabled="true">
+        <artifact name="ServletPot:war exploded" />
+      </option>
+    </method>
+  </configuration>
+</component>

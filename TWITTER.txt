@@ -1,0 +1,22 @@
+
+Twitter support was added in version 0.31
+
+Needed libraries (supplied):
+
+- twitter 4j
+
+In the configuration you need to enter the following five lines:
+
+
+basic ideas:
+
+usetwitter=no
+accesstoken=YOUR DATA
+accesstokensecret=YOUR DATA
+consumerkey=YOUR DATA
+consumerkeysecret=YOUR DATA
+
+Search google how to get this types of data, it is actually quite easy.
+
+
+

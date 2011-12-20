@@ -1,0 +1,45 @@
+Changes from 0.34 to 0.35:
+
+- added support for Redis NoSQL db to improve speed
+
+
+Changes from 0.33 to 0.34
+
+added faster CRCs for PHP attack detection
+fastened up some code
+
+Changes from 0.32 to 0.33
+
+- added timezone support
+- optimzed php emulation
+- added noanswer flag to config, meaning requests this URI will not be answered;
+
+Changes from 0.31 to 0.32:
+
+- added Twitter support
+
+Changes from 0.3 to 0.31:
+
+- another code cleanup
+- fixed broken download code
+- changed obvious bad/crappy code after findbugs scan
+
+
+Changes from 0.2 to 0.3:
+
+- overall code cleanup
+- better failure handling
+- better parsing
+- php emulation initial code
+- added usage of revervse proxy (apache in front of tomcat)
+
+
+Changes from 0.1 to 0.2:
+
+- added code for joomly blind sql code
+- added better Post handler
+- added better database layout for posts
+- shortend output of Post parameter analysis, if a known
+        attack vector is found
+- fixed bugs in the confighandler (thanks ingo for the hint)        
+

@@ -1,0 +1,83 @@
+ServletPot Installation Notes  (0.34 and above)
+-----------------------------------------------
+
+Tested on:
+
+- OpenSuse 11.4
+- MacOS 10.6.++
+- Ubuntu 10.04 ++
+- Mysql 5.1
+- Cassandra 1.0.3 (starting with version 0.35)
+- Tomcat 6.0.x ++
+
+Needed software:
+
+- an application server supporting latest servlet specification (2.2+)
+- ant 1.8.1 
+
+Note for OpenSuse 11.3 and Tomcat:
+
+Make sure to install at least the full version of the Java 1.5 SDK, not
+only te gcj-compat version.
+
+
+How to install ServletPot
+
+1. read THIS file
+
+2. change information in config.txt /web/WEB-INF/config.txt to match your environment
+
+3. compile it (ANT build script supplied build.xml, adapt Tomcat location, task is DIST)
+
+4. prepare the database by running install.sql
+
+5. deploy the application in the ROOT context of the Tomcat Server
+
+6. for Tomcat 6 and 7, delete the ROOT drawer in the webapps directory
+
+7. run ./import.sh to set up initial page
+
+8. (optional) change the content of /web/index.html, just leave the marker
+    <!--flake--> in it
+
+
+
+Configuration:
+
+
+The userevproxy=yes setting in the configfile (default) means, that Servletpot
+is checking if the X-Forwarded-For or CLIENT_IP headers are set. If so, the
+IP listed here will be used for IP handling. This makes sense, if Servletpot
+is run behind a apache server.
+
+Useful apache settings:
+
+RewriteEngine On
+RewriteRule  ^/$                 /homepage.max.html
+
+Header set CLIENT_IP %{REMOTE_ADDR}
+
+ProxyPass / http://127.0.0.1:8080/
+ProxyPassReverse / http://127.0.0.1/8080/
+
+Means that all requests to / will be rewritten to /homepage.max.html (Tomcat
+has some strange behavior when dealing with / URLs).
+
+Additionally the proxypass commands are needed to forward the requests to
+the toncat backend.
+
+Servletpot supports custom timezones starting with version 0.34, by entering the timezone field in the
+configuration file (default is Europe/Berlin), the honeypot stores the time stamps
+in correlation to the local time zone.
+
+Users reported that they use nagios for monitoring the operations and complained
+about the not needed log entries, solution starting with version 0.34:
+
+Change the noanswer field in the configuration file to an appropriate value:
+
+noanswer=/your_nagios_request
+
+
+
+
+

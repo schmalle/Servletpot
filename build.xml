@@ -1,0 +1,69 @@
+<project name="Make Servletpot" default="dist" basedir=".">
+    <description>
+        simple example build file
+    </description>
+
+    <target name="dist" description="generate the distribution" depends="compile">
+
+        <war destfile="./servletpot.war" webxml="./web/WEB-INF/web.xml">
+            <fileset dir="./web/"/>
+
+        </war>
+
+        <jar destfile="./servletpot.jar">
+             <fileset dir="./web/WEB-INF/classes/"/>
+
+         </jar>
+
+
+    </target>
+
+    <target name="compile" depends="clean">
+
+        <javac srcdir="./src/"
+               destdir="./web/WEB-INF/classes/"
+               classpath="./web/WEB-INF/lib/commons-pool-1.5.6.jar:./web/WEB-INF/lib/Jedis-2.0.0.jar:./Libs/cassandra-jdbc-1.0.5-SNAPSHOT.jar:./Libs/servlet-api.jar:./web/WEB-Inf/Lib/twitter4j-core-2.2.1.jar:./web/WEB-INF/lib/mysql.jar:./web/WEB-INF/lib/mail.jar:./web/WEB-INF/lib/httpcore-4.0.1.jar:./web/WEB-INF/lib/httpclient-4.0.1.jar"
+               debug="on">
+
+            <classpath>
+                <pathelement location="./"/>
+                <pathelement path="/Libs/servlet-api.jar"/>
+
+
+            </classpath>
+        </javac>
+
+    </target>
+
+    <target name="clean">
+
+        <delete file="./servletpot.war"/>
+        <delete file="./servletpot.jar"/>
+        <delete dir="/Developer/apache-tomcat-7.0.4/webapps/servletpot/"/>
+        <delete dir="./out/"/>
+        <delete dir="./web/WEB-INF/classes/"/>
+        <mkdir  dir="./web/WEB-INF/classes/"/>
+
+
+    </target>
+
+    <target name="deploy" depends="dist">
+
+        <copy file="./servletpot.war" tofile="/Developer/apache-tomcat-7.0.4/webapps/ROOT.war"/>
+
+     </target>
+
+    <target name="package" depends="dist">
+
+    <delete file="./../servletpot.zip"/>
+    <zip destfile="./../servletpot.zip"
+       basedir="./"
+       includes="**/*.java, **/*.class, **/*.txt, **/*.xml, **/*.html, **/*.jar, **/*.war, **/*.sh, **/*.iml, **/*.properties, **/*.sql, **/*.TXT"
+    />
+    
+
+    </target>
+
+
+
+</project>
