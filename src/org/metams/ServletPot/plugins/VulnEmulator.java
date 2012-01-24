@@ -434,8 +434,19 @@ public class VulnEmulator
 							"/content/phpthumb/phpthumb.php?src=file.jpg&fltr[]", "Attack (RFI)",
 							"/wp-content/themes/basic//cache/external_1e4de80f0b49ce95d91f9ed089ba3743.php", "Attack",
 				            "/wp-content/plugins/highlighter/libs//cache/1e4de80f0b49ce95d91f9ed089ba3743.php", "Attack",
-							"/wp-content/plugins/highlighter/libs//temp/2f8380899b6b4ccac4b9ec88eae335e5.php", "Attack"
-
+							"/wp-content/plugins/highlighter/libs//temp/2f8380899b6b4ccac4b9ec88eae335e5.php", "Attack",
+							"/index.php?option=com_artforms&task=ferforms&viewform=-1%20union%20select%20", "Attack (SQL Injection)",
+							"/wp-content/themes/constructor/layouts//cache/external_4ef5475b54a2f9bddf06cdbf8f2f27ca.php", "Attack",
+							"/wp-content/themes/constructor/layouts//cache/4ef5475b54a2f9bddf06cdbf8f2f27ca.php", "Attack",
+							"/index.php?option=com_user&view=reset", "Attack",
+							"//components/com_extcalendar/lib/mail.inc.php?config_ext[lib_dir]=", "Attack",
+							"/mysqladmin/config/config.inc.php?c=echo%20", "Attack",
+							"/webdb/config/config.inc.php?c=echo%20", "Attack",
+							"/websql/config/config.inc.php?c=echo%20", "Attack",
+							"/phppgadmin/config/config.inc.php?c=echo%20", "Attack",
+				            "/phpmy-admin/config/config.inc.php?c=echo%20", "Attack",
+							"/admin/config/config.inc.php?c=echo%20", "Attack (RCE)",
+							"/pma/config/config.inc.php?c=echo%20", "Attack (RCE)"
 
         };
 
