@@ -397,7 +397,8 @@ public class Entry extends HttpServlet
 			{
 				for (int runner = 0; runner <= m_attackStrings.length -1; runner++)
 				{
-					x2.put(runner, m_attackStrings[runner]);
+					if (m_attackStrings[runner] != null)
+						x2.put(runner, m_attackStrings[runner]);
 				}
 			}
 

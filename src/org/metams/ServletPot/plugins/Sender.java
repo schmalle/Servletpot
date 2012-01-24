@@ -62,8 +62,8 @@ public class Sender
                         "                <username>" + userName + "</username>\n" +
                         "                <token>" + token + "</token>\n" +
                         "        </Authentication>\n" +
-                        "        <Alert messageid=\"www.ggg.de\">\n" +
-                        "            <Analyzer id=\"42\" name=\"www.ggg.de\"/>     \n" +
+                        "        <Alert messageid=\"www.emailplaceng.de\">\n" +
+                        "            <Analyzer id=\"42\" name=\"www.emailplaceng.de\"/>     \n" +
                         "                <CreateTime tz=\"0100\">"+ time +"</CreateTime>                                  \n" +
                         "                <Source>\n" +
                         "                        <Node>\n" +

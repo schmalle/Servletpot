@@ -407,7 +407,6 @@ public class VulnEmulator
                             "/program/modules/mods_full/shopping_cart/includes/login.php?_SESSION%5Bdocroot_path", "Attack (XFI)" ,
                             "/index.php?option=com_fabrik&view=table&tableid='", "Attack (SQL Injection)",
                             "/index.php?option=com_gcalendar&controller=", "Attack (RFI) ",
-
                             "/skin_shop/standard/3_plugin_twindow/twindow_notice.php?shop_this_skin_path=", "Attack (RFI) ",
                             "/index.php?option=com_jresearch&controller=", "Attack (RFI) ", 
                             "/index.php?option=com_gcalendar&controller=", "Attack (RFI) ",
@@ -419,7 +418,24 @@ public class VulnEmulator
                             "/index.php?option=com_datsogallery&func=detail&id=-1", "Attack (SQL Injection)",
                             "/index.php?option=com_pcchess&itemid=-1&page=players&user_id=-1", "Attack (SQL Injection)",
                             " /index.php?option=com_gigcal&itemid=78&id=-999+union+all+select", "Attack (SQL Injection)",
-                            "/awstatstotals/awstatstotals.php?sort=%7b", "Attack (RFI) "
+                            "/awstatstotals/awstatstotals.php?sort=%7b", "Attack (RFI) ",
+							"/components/com_flexicontent/librairies/phpthumb/phpthumb.php?src=file.jpg&fltr[]=blur", "Attack (RFI)",
+							"/admin/tiny_mce/plugins/ibrowser/scripts/phpthumb/phpthumb.php?src=file.jpg&fltr[]=blur", "Attack (RFI)",
+							"/cms/plugins/content/jthumbs/includes/phpthumb.php?src=file.jpg&fltr[]=blur|", "Attack(RFI)",
+							"/common/scripts/phpthumb/phpthumb.php?src=file.jpg&fltr[]=blur", "Attack (RFI)",
+							"/components/com_flexicontent/librairies/phpthumb/phpthumb.php?src=file.jpg&fltr[]=", "Attack (RFI)",
+							"/phpmyadmin/config/config.inc.php?c=", "Attack (PhpMyAdmin)",
+							"/conlib/prepend.php3?cfg[path][contenido]=", "Attack (RFI)",
+							"/wp-content/plugins/com-resize/phpthumb/phpthumb.php?src=", "Attack (RCE)",
+							"/wp-content/themes/comfy-plus/scripts/phpthumb/phpthumb.php?src=", "Attack (RCE)",
+							"/myadmin/config/config.inc.php?c=echo", "Attack (RCE)",
+							"/index.php?content=/proc/self/enviro", "Attack (LFI)",
+							"/skin/sirini_simplism_gallery_v4/setup.php?dir", "Attack (RFI)",
+							"/content/phpthumb/phpthumb.php?src=file.jpg&fltr[]", "Attack (RFI)",
+							"/wp-content/themes/basic//cache/external_1e4de80f0b49ce95d91f9ed089ba3743.php", "Attack",
+				            "/wp-content/plugins/highlighter/libs//cache/1e4de80f0b49ce95d91f9ed089ba3743.php", "Attack",
+							"/wp-content/plugins/highlighter/libs//temp/2f8380899b6b4ccac4b9ec88eae335e5.php", "Attack"
+
 
         };
 

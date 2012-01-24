@@ -195,13 +195,20 @@ public class Redis implements DBAccess
 	 */
 	public boolean writeIP(String ip)
 	{
-		java.util.Date x = new java.util.Date();
-		String dd = x.toString();
-		m_con.set("IP_" + ip, dd);
+		if (ip != null)
+		{
+			java.util.Date x = new java.util.Date();
 
-		m_con.save();
-		return true;
+			String dd = x.toString();
+			m_con.set("IP_" + ip, dd);
 
+			m_con.save();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}   // writeIP
 
 
@@ -247,37 +254,32 @@ public class Redis implements DBAccess
 			{
 				number = Integer.parseInt(nr) + 1;
 			}
+		} catch (Exception e)
+		{
+			System.out.println("Error at reading URI_COUNTER field");
+			return false;
 		}
-
-		catch(Exception e)
-			{
-				System.out.println("Error at reading URI_COUNTER field");
-				return false;
-			}
 
 		try
 		{
 			m_con.set("URI_COUNTER", new Integer(number).toString());
 			m_con.rpush("URI", URI);
+		} catch (Exception e)
+		{
+			System.out.println("Error at saving URI COUNTER or URI fields");
+			return false;
 		}
-		catch(Exception e)
-					{
-						System.out.println("Error at saving URI COUNTER or URI fields");
-						return false;
-					}
 
 		String lenString = new Long(len).toString();
 		String crcString = new Long(hash).toString();
 		try
 		{
 			m_con.set("URIHASH_" + crcString + "_" + lenString, new Integer(number).toString());
+		} catch (Exception e)
+		{
+			System.out.println("Error at saving URIHASH field");
+			return false;
 		}
-		catch(Exception e)
-					{
-						System.out.println("Error at saving URIHASH field");
-						return false;
-					}
-
 
 		return true;
 	}   // writeURI
@@ -449,14 +451,17 @@ public class Redis implements DBAccess
 
 		List uri = m_con.lrange("URI", 0, new Integer(nr).intValue());
 
-		String[] buffer = new String[new Integer(nr).intValue()];
+		String[] buffer = new String[new Integer(nr).intValue() + 1];
+		
+		System.out.println("Info: Found a total of " + new Integer(nr).intValue() + "URIs (URI_COUNTER)");
+		System.out.println("Info: Found a total of " + uri.size() + "URIs (URI)");
+
 		int runner = 0;
 		Iterator<String> iterator = uri.iterator();
 		while (iterator.hasNext())
 		{
 			String element = iterator.next();
 			buffer[runner++] = element;
-			System.out.println(element);
 		}
 
 
