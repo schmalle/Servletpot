@@ -144,7 +144,7 @@ public class Sender
         catch (Throwable t)
         {
             // AND NEVER EVER EVER DO THIS, IT IS LAZY AND ALMOST ALWAYS WRONG!
-            t.printStackTrace();
+            System.out.println("Servletplot.plugins.sender: Error in ssl handling");
             return null;
         }
     }

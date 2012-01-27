@@ -3,6 +3,12 @@ package org.metams.ServletPot.Database;
 import org.metams.ServletPot.plugins.Logger;
 import redis.clients.jedis.Jedis;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeUtility;
+import javax.mail.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.*;
 import java.util.Iterator;
 import java.util.List;
@@ -195,20 +201,45 @@ public class Redis implements DBAccess
 	 */
 	public boolean writeIP(String ip)
 	{
-		if (ip != null)
+
+		try
 		{
-			java.util.Date x = new java.util.Date();
 
-			String dd = x.toString();
-			m_con.set("IP_" + ip, dd);
+			if (ip != null)
+			{
+				java.util.Date x = new java.util.Date();
 
-			m_con.save();
-			return true;
+				String dd = x.toString();
+
+				System.out.println("WriteIP(): IP_" + ip + ":" + dd);
+
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				OutputStream b64os = MimeUtility.encode(baos, "base64");
+				b64os.write(ip.getBytes());
+				b64os.close();
+
+				String out = b64os.toString();
+				m_con.set("IP_" + out, dd);				// out instead of IP
+
+				m_con.save();
+				return true;
+
+			} else
+			{
+				return false;
+			}
+
 		}
-		else
+		catch (MessagingException e)
 		{
 			return false;
 		}
+		catch (IOException e)
+		{
+			return false;
+		}
+
+
 	}   // writeIP
 
 
@@ -275,7 +306,8 @@ public class Redis implements DBAccess
 		try
 		{
 			m_con.set("URIHASH_" + crcString + "_" + lenString, new Integer(number).toString());
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			System.out.println("Error at saving URIHASH field");
 			return false;
