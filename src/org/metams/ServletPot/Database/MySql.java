@@ -80,22 +80,39 @@ public class MySql implements DBAccess
         }
         catch (ClassNotFoundException e)
         {
-            m_l.log("Error: Unable to load database driver...", 0);
+            if (m_l != null) 
+				m_l.log("Error: Unable to load database driver...", 0);
+			else 
+			{
+				System.out.println("Mysql.open(): ClassNotFoundException caught");
+			}
             return false;
         }
         catch (SQLException e)
         {
-            m_l.log("Error: Unable to open database connection...", 0);
+			if (m_l != null) m_l.log("Error: Unable to open database connection...", 0);
+			else
+			{
+				System.out.println("Mysql.open(): SQLException caught");
+			}
             return false;
         }
         catch (InstantiationException e)
         {
-            m_l.log("Error: Unable to instantiate database driver...", 0);
+			if (m_l != null)  m_l.log("Error: Unable to instantiate database driver...", 0);
+			else
+			{
+				System.out.println("Mysql.open(): InstantiationException caught");
+			}
             return false;
         }
         catch (IllegalAccessException e)
         {
-            m_l.log("Error: Illegal access to database driver...", 0);
+			if (m_l != null) m_l.log("Error: Illegal access to database driver...", 0);
+			else
+			{
+				System.out.println("Mysql.open(): InstantiationException caught");
+			}
             return false;
         }
     }    // open

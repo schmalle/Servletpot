@@ -149,19 +149,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="importredis.sh" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="importredis.sh" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/importredis.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="21" selection-start="0" selection-end="197" vertical-scroll-proportion="0.0">
+            <state line="0" column="170" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="import.sh" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/import.sh">
+      <file leaf-file-name="importmsql.sh" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/importmsql.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="0" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0">
+            <state line="0" column="189" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -179,7 +179,7 @@
       <file leaf-file-name="copy.sh" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/copy.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="13" selection-start="598" selection-end="598" vertical-scroll-proportion="0.0">
+            <state line="10" column="64" selection-start="834" selection-end="834" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -188,34 +188,34 @@
       <file leaf-file-name="ImporterMysql.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/metams/ServletPot/tools/ImporterMysql.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="13" selection-start="280" selection-end="280" vertical-scroll-proportion="0.0">
+            <state line="51" column="9" selection-start="1254" selection-end="1254" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.txt" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MySql.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/metams/ServletPot/Database/MySql.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="113" column="63" selection-start="2471" selection-end="2471" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.txt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/config.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="12" selection-start="862" selection-end="862" vertical-scroll-proportion="0.7952468">
+            <state line="29" column="12" selection-start="862" selection-end="862" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="install.sql" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/install.sql">
+      <file leaf-file-name="installmysql.sql" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/installmysql.sql">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Entry.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/org/metams/ServletPot/Entry.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="417" column="51" selection-start="11997" selection-end="11997" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -235,7 +235,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/org/metams/ServletPot/tools/ImporterMysql.java" />
         <option value="$PROJECT_DIR$/src/org/metams/ServletPot/test/JedisTest.java" />
         <option value="$PROJECT_DIR$/src/org/metams/ServletPot/plugins/HandleAttackFiles.java" />
         <option value="$PROJECT_DIR$/src/org/metams/ServletPot/plugins/http/Downloader.java" />
@@ -247,10 +246,11 @@
         <option value="$PROJECT_DIR$/src/org/metams/ServletPot/plugins/VulnEmulator.java" />
         <option value="$PROJECT_DIR$/src/org/metams/ServletPot/Database/Redis.java" />
         <option value="$PROJECT_DIR$/src/org/metams/ServletPot/plugins/Sender.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/config.txt" />
+        <option value="$PROJECT_DIR$/src/org/metams/ServletPot/Database/MySql.java" />
         <option value="$PROJECT_DIR$/importredis.sh" />
         <option value="$PROJECT_DIR$/import.sh" />
         <option value="$PROJECT_DIR$/copy.sh" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/config.txt" />
       </list>
     </option>
   </component>
@@ -1294,11 +1294,6 @@
         <state line="9" column="23" selection-start="213" selection-end="213" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/metams/ServletPot/Database/MySql.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="216" selection-end="216" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/metams/ServletPot/Entry.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="417" column="51" selection-start="11997" selection-end="11997" vertical-scroll-proportion="0.0" />
@@ -1327,44 +1322,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/install.sql">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/config.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="12" selection-start="862" selection-end="862" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/installmysql.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/importredis.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="21" selection-start="0" selection-end="197" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/import.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/metams/ServletPot/tools/ImporterMysql.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="13" selection-start="280" selection-end="280" vertical-scroll-proportion="0.0">
+        <state line="51" column="9" selection-start="1254" selection-end="1254" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/metams/ServletPot/Database/MySql.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="113" column="63" selection-start="2471" selection-end="2471" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/importmsql.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="189" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/copy.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="13" selection-start="598" selection-end="598" vertical-scroll-proportion="0.0">
+        <state line="10" column="64" selection-start="834" selection-end="834" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/config.txt">
+    <entry file="file://$PROJECT_DIR$/importredis.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="12" selection-start="862" selection-end="862" vertical-scroll-proportion="0.7952468">
+        <state line="0" column="170" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
