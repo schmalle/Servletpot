@@ -446,7 +446,10 @@ public class VulnEmulator
 							"/phppgadmin/config/config.inc.php?c=echo%20", "Attack",
 				            "/phpmy-admin/config/config.inc.php?c=echo%20", "Attack",
 							"/admin/config/config.inc.php?c=echo%20", "Attack (RCE)",
-							"/pma/config/config.inc.php?c=echo%20", "Attack (RCE)"
+							"/pma/config/config.inc.php?c=echo%20", "Attack (RCE)",
+							"/phpmyadmin-2.5.5-pl1/index.php", "Attack (Admin)",
+							"/phpmyadmin-2.5.6-rc2/index.php", "Attack (Admin)",
+							"/phpmyadmin-2.5.7/index.php", "Attack (Admin)"
 
         };
 
