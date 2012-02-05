@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/servletpot</property>
+        <property name="hibernate.connection.username">servletpot</property>
+        <property name="hibernate.connection.password">pw100pw200</property>
+
+        <!-- SQL dialect -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+
+        <!-- JDBC connection pool (built-in) -->
+        <property name="connection.pool_size">10</property>
+
+        <!-- Echo all executed SQL to stdout -->
+            <property name="show_sql">true</property>
+
+            <!-- Drop and re-create the database schema on startup -->
+            <property name="hibernate.bytecode.provider">javassist</property>
+
+        <mapping class="org.metams.ServletPot.Database.Hibernate.HibernateURI"/>
+
+        <!-- Mapping files -->
+        <!-- Not needed, because of Annotations -->
+    </session-factory>
+</hibernate-configuration>
