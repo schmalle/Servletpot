@@ -1,20 +1,17 @@
 package org.metams.ServletPot.Database.Hibernate;
 
 
+import org.hibernate.Query;
 import org.metams.ServletPot.Database.DBAccess;
 import org.metams.ServletPot.plugins.Logger;
 
 import java.sql.*;
 import java.util.Hashtable;
-import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.GenerationType;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.metams.ServletPot.Database.Hibernate.HibernateURI;
+import org.metams.ServletPot.Database.Hibernate.HibernateUtil;
 
 /**
  * User: flake
@@ -31,6 +28,9 @@ public class MySqlHibernate implements DBAccess
 	private String m_databasePreBlock = "ServletPot.";
 	private String m_configLocation = "ServletPot.Config";
 
+	SessionFactory sf       = new HibernateUtil().getSessionFactory();
+ 	Session session         = sf.openSession();
+ 	Transaction transaction = null;
 
 
 
@@ -81,6 +81,8 @@ public class MySqlHibernate implements DBAccess
 	 */
 	public boolean open(String userName, String password, String url)
 	{
+
+
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -266,8 +268,7 @@ public class MySqlHibernate implements DBAccess
 		{
 
 			// PreparedStatements can use variables and are more efficient
-			preparedStatement = m_con.prepareStatement("delete from " + m_databasePreBlock + "IPs where ip=\"" + ip + "\";");
-			preparedStatement.executeUpdate();
+			executeHibernateQuery("delete from " + m_databasePreBlock + "IPs where ip=\"" + ip + "\";");
 
 
 			// PreparedStatements can use variables and are more efficient
@@ -312,30 +313,24 @@ public class MySqlHibernate implements DBAccess
 			// if the URI exists, just increase the counter
 			if (existsURI(hash, len, reqNr))
 			{
+
 				counter = 1 + getCounter(hash, len, "URIs");
-				String sqlQuery = "delete from " + m_databasePreBlock + "URIs WHERE hash=" + hash + " AND length=" + len + ";";
-
-				// PreparedStatements can use variables and are more efficient
-				preparedStatement = m_con.prepareStatement(sqlQuery);
-
-				preparedStatement.executeUpdate();
+				executeHibernateQuery("delete from " + m_databasePreBlock + "URIs WHERE hash=" + hash + " AND length=" + len + ";");
 
 			}
 
+			HibernateURI newURI = new HibernateURI();
+   			newURI.setlength(len);
+   			newURI.sethash(hash);
+			newURI.seturi(URI);
+			newURI.setcounter(counter);
 
-			// PreparedStatements can use variables and are more efficient
-			preparedStatement = m_con.prepareStatement("insert into " + m_databasePreBlock + "URIs values (default, ?, ?, ?, ?)");
+			transaction = session.beginTransaction();
+			session.save(newURI);
+			transaction.commit();
 
-			// init fields
-			preparedStatement.setString(1, URI);
-			preparedStatement.setLong(2, hash);
-			preparedStatement.setLong(3, len);
-			preparedStatement.setLong(4, counter);
-
-			// save data
-			preparedStatement.executeUpdate();
-			//m_con.close();
-		} catch (SQLException e)
+		}
+		catch (SQLException e)
 		{
 			System.out.println(e.toString());
 			return false;
@@ -376,21 +371,17 @@ public class MySqlHibernate implements DBAccess
 	public boolean increaseCounter()
 	{
 
+
+
 		PreparedStatement preparedStatement;
 
 		int counter = getCounter() + 1;
 
 		try
 		{
-			String sqlQuery = "delete from " + m_configLocation + " WHERE counter=" + counter + ";";
 
-
-			// PreparedStatements can use variables and are more efficient
-			preparedStatement = m_con.prepareStatement(sqlQuery);
-
-			preparedStatement.executeUpdate();
-
-
+			executeHibernateQuery("delete from " + m_configLocation + " WHERE counter=" + counter + ";");
+			
 			// PreparedStatements can use variables and are more efficient
 			preparedStatement = m_con.prepareStatement("insert into " + m_configLocation + " values (0, ?)");
 
@@ -407,6 +398,19 @@ public class MySqlHibernate implements DBAccess
 		return true;
 	}
 
+
+	/**
+	 * executes a single one shot request to a db
+	 * @param sqlQuery
+	 */
+	public void executeHibernateQuery(String sqlQuery)
+	{
+		session = sf.getCurrentSession();
+		Query query = session.createQuery(sqlQuery);
+  		int row = query.executeUpdate();
+
+	}
+	
 
 	/*
 			write code for HTTP Post
@@ -449,55 +453,15 @@ public class MySqlHibernate implements DBAccess
 	}   // writePost
 
 
-	public boolean writeGet(String URI, long hash, long len, String ip, String found)
-	{
-
-		PreparedStatement preparedStatement;
-
-		try
-		{
-
-			// PreparedStatements can use variables and are more efficient
-			preparedStatement = m_con.prepareStatement("insert into " + m_databasePreBlock + "Gets values (default, ?, ?, ?, ?, ?)");
-
-			// init fields
-			preparedStatement.setString(1, URI);
-			preparedStatement.setLong(2, hash);
-			preparedStatement.setLong(3, len);
-			preparedStatement.setString(4, found);
-			preparedStatement.setString(5, ip);
-
-			// save data
-			preparedStatement.executeUpdate();
-		} catch (Exception e)
-		{
-			System.out.println(e.toString());
-
-			return false;
-		}
-
-		return true;
-
-	}   // writeGet
-
-
+	/**
+	 * @param line
+	 */
 	public void deleteURI(String line)
 	{
-		try
-		{
-			String sqlQuery = "delete from " + m_databasePreBlock + "URIs WHERE URI=?;";
-
-
-			// PreparedStatements can use variables and are more efficient
-			PreparedStatement preparedStatement = m_con.prepareStatement(sqlQuery);
-			preparedStatement.setString(1, line);
-
-			preparedStatement.executeUpdate();
-		} catch (Exception e)
-		{
-
-		}
-
+		String hql = "delete from " + m_databasePreBlock + "URIs WHERE URI= :URI";
+		Query query = session.createQuery(hql);
+		query.setString("URI", line);
+        int row = query.executeUpdate();
 		// return true;
 	}
 
@@ -553,14 +517,27 @@ public class MySqlHibernate implements DBAccess
 	}
 
 
+	public Boolean exists(long hash, long len)
+	{
+		session = sf.openSession();
+		Query query = session.createQuery("SELECT cust.id as ID FROM org.metams.ServletPot.Database.Hibernate.HibernateURI AS cust WHERE cust.hash=" + hash + " AND cust.length=" + len);
+
+
+
+
+		return (query.uniqueResult() != null);
+	}
+
 	/*
 		 *   returns true, if URI exists
 		 */
 	public boolean existsURI(long hash, long len, int reqNr)
 	{
 
-		boolean returnValue = false;
 
+        return exists(hash, len);
+
+/*
 		try
 		{
 
@@ -585,6 +562,8 @@ public class MySqlHibernate implements DBAccess
 		if (m_l != null && returnValue) m_l.log("ServletPot.existsURI: URI (" + hash + ", " + len + ") here", reqNr);
 
 		return returnValue;
+
+		*/
 	}
 
 
