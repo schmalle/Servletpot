@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.metams.ServletPot.Database.Hibernate.HibernateURI;
 import org.metams.ServletPot.Database.Hibernate.HibernateUtil;
+import org.metams.ServletPot.Database.Hibernate.MySqlHibernate;
 
 public class HibernateTest
 {
@@ -18,7 +19,7 @@ public class HibernateTest
 		newURI.setcounter(1);
  
         SessionFactory sf       = new HibernateUtil().getSessionFactory();
-        Session session         = null;
+        Session session         = sf.openSession();
         Transaction transaction = null;
 		
 		if (sf == null)
@@ -27,18 +28,14 @@ public class HibernateTest
 		}
 		
  
-        // Neuen Benutzer in Datenbank speichern:
-        try
-        {
             session             = sf.openSession(); // sf.getCurrentSession();
             transaction         = session.beginTransaction();
             session.save(newURI);
             transaction.commit();
-        }
-        catch (Exception e)
-        {
-            // rollback(transaction);
-            e.printStackTrace();
-        }
+
+
+		MySqlHibernate mysql = new MySqlHibernate();
+        mysql.writeURI("hallo",100,100,100, 100);
+
     }
 }
