@@ -20,15 +20,20 @@
 
     <target name="compile" depends="clean">
 
+
+        <copy file="./src/hibernate.cfg.xml" tofile="./web/WEB-INF/classes/hibernate.cfg.xml"/>
+        <copy file="./src/HibernateConfig.hbm.xml" tofile="./web/WEB-INF/classes/./src/HibernateConfig.hbm.xml"/>
+        <copy file="./src/HibernateURI.hbm.xml" tofile="./web/WEB-INF/classes/./src/HibernateURI.hbm.xml"/>
+        <copy file="./src/HibernateFile.hbm.xml" tofile="./web/WEB-INF/classes/./src/HibernateFile.hbm.xml"/>
+
         <javac srcdir="./src/"
                destdir="./web/WEB-INF/classes/"
-               classpath="./web/WEB-INF/lib/commons-pool-1.5.6.jar:./web/WEB-INF/lib/Jedis-2.0.0.jar:./Libs/cassandra-jdbc-1.0.5-SNAPSHOT.jar:./Libs/servlet-api.jar:./web/WEB-Inf/Lib/twitter4j-core-2.2.1.jar:./web/WEB-INF/lib/mysql.jar:./web/WEB-INF/lib/mail.jar:./web/WEB-INF/lib/httpcore-4.0.1.jar:./web/WEB-INF/lib/httpclient-4.0.1.jar"
+               classpath="./web/WEB-INF/lib/hibernate-jpa-2.0-api-1.0.1.Final.jar:./web/WEB-INF/lib/hibernate-core-4.0.1.Final.jar:./web/WEB-INF/lib/hibernate-commons-annotations-4.0.1.Final.jar:./web/WEB-INF/lib/commons-pool-1.5.6.jar:./web/WEB-INF/lib/Jedis-2.0.0.jar:./Libs/cassandra-jdbc-1.0.5-SNAPSHOT.jar:./Libs/servlet-api.jar:./web/WEB-Inf/Lib/twitter4j-core-2.2.1.jar:./web/WEB-INF/lib/mysql.jar:./web/WEB-INF/lib/mail.jar:./web/WEB-INF/lib/httpcore-4.0.1.jar:./web/WEB-INF/lib/httpclient-4.0.1.jar"
                debug="on">
 
             <classpath>
                 <pathelement location="./"/>
                 <pathelement path="/Libs/servlet-api.jar"/>
-
 
             </classpath>
         </javac>
