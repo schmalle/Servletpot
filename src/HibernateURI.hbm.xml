@@ -5,6 +5,8 @@
 
 <hibernate-mapping>
  <class name="org.metams.ServletPot.Database.Hibernate.HibernateURI" table="URIs" >
+     <cache usage="read-write"/>
+
   <id name="id" type="int" column="id" >
    <generator class="native"/>
   </id>

@@ -4,6 +4,7 @@ package org.metams.ServletPot.plugins;
 
 import org.metams.ServletPot.ConfigHandler;
 import org.metams.ServletPot.Database.DBAccess;
+import org.metams.ServletPot.Database.Hibernate.MySqlHibernate;
 import org.metams.ServletPot.Database.MySql;
 import org.metams.ServletPot.Database.Redis;
 import org.metams.ServletPot.plugins.http.Downloader;
@@ -65,7 +66,6 @@ public class VulnEmulator
             return;
 
         String ip = m_utils.getIP(request);
-        m_database.writeIP(ip);
         m_database.writeURI(URI, m_utils.getCRC32(URI, false), URI.length(), 0, reqNr);
 
         int in = attackType.indexOf("FI): ");
@@ -80,14 +80,6 @@ public class VulnEmulator
 
         m_l.log("Info: " + attackTypeMini + "from IP: " + ip + " at time " + new Date().toString() + " and user-agent: "+ request.getHeader("User-Agent") +" and request " + URI, reqNr);
         
-        try
-        {
-            m_database.writePost(URI, attackType, m_utils.getCRC32(URI, false), URI.length(), 0, ip, new Date().toString());
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
 
         sendCentralDB(ip, URI, attackType);
 
@@ -109,16 +101,23 @@ public class VulnEmulator
 		if (db.equalsIgnoreCase("mysql"))
 			return new MySql(l);
 
+		if (db.equalsIgnoreCase("hibernate"))
+			return new MySqlHibernate(l);
+
 		if (db.equalsIgnoreCase("redis"))
 			return new Redis(l);
 
 		return null;
 	}
 
-    /*
-     *   constructor for the Vulnemulator class
-     */
 
+	/**
+	 *
+	 * @param cf
+	 * @param u
+	 * @param l
+	 * @param reqNr
+	 */
     public VulnEmulator(ConfigHandler cf, Utils u, Logger l, int reqNr)
     {
 
@@ -145,7 +144,11 @@ public class VulnEmulator
     }    // VulnEmulator
 
 
-    public void handlePost(HttpServletRequest request)
+	/**
+	 *
+	 * @param request
+	 */
+	public void handlePost(HttpServletRequest request)
     {
 
 	    m_l.log("ServletPot: Error, dummy handlePost in VulnEmulator has been called ...", 42);
@@ -216,17 +219,11 @@ public class VulnEmulator
 							URI = shortenURI(URI, parameter);
 							long hash =  m_utils.getCRC32(URI, false);
 							
-                            // store IP
-                            if (m_database != null )
-								m_database.writeIP(ip);
 
                             // store URI (for learning)
 							if (m_database != null )
 								m_database.writeURI(URI, hash, URI.length(), 0, reqNr);
 
-                            // store Get request for statistics
-							if (m_database != null )
-								m_database.writeGet(URI, hash, URI.length(), ip, new Date().toString());
 
                             downloadFile(parameter, reqNr);
 

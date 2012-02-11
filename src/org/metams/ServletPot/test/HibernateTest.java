@@ -35,7 +35,10 @@ public class HibernateTest
 
 
 		MySqlHibernate mysql = new MySqlHibernate();
+		mysql.getURI();
         mysql.writeURI("hallo",100,100,100, 100);
+		mysql.writeFile(1024, 2048, 1, 1);
+		mysql.increaseCounter();
 
     }
 }

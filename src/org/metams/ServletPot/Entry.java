@@ -8,6 +8,7 @@ package org.metams.ServletPot;
  */
 
 import org.metams.ServletPot.Database.DBAccess;
+import org.metams.ServletPot.Database.Hibernate.MySqlHibernate;
 import org.metams.ServletPot.Database.MySql;
 import org.metams.ServletPot.Database.Redis;
 import org.metams.ServletPot.plugins.HandleAttackFiles;
@@ -46,6 +47,7 @@ public class Entry extends HttpServlet
     private DBAccess        m_db            = null;
     private PostAnalyzer    m_post          = null;
 	private String          m_noanswer      = null;
+	
 
 
 	/*
@@ -85,6 +87,8 @@ public class Entry extends HttpServlet
                 m_db = new MySql(m_l);
             else if (m_configHandler.getDB().equalsIgnoreCase("redis"))
                 m_db = new Redis(m_l);
+			else if (m_configHandler.getDB().equalsIgnoreCase("hibernate"))
+       			m_db = new MySqlHibernate(m_l);
             else
                 m_db = null;
 
@@ -164,6 +168,7 @@ public class Entry extends HttpServlet
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+
         PrintWriter out = response.getWriter();
         String attackType = null;
 
@@ -215,6 +220,19 @@ public class Entry extends HttpServlet
 
         if (m_noanswer != null && URI.contains(m_noanswer))
 	        return m_robot.makeRobots(out);
+		
+		if (URI.toLowerCase().endsWith("favicon.ico"))
+			return true;
+
+		if (URI.toLowerCase().endsWith(".png"))
+			return true;
+
+		if (URI.toLowerCase().endsWith(".gif"))
+			return true;
+
+		if (URI.toLowerCase().endsWith(".jpg"))
+			return true;
+
 
 	    return false;
 
@@ -282,6 +300,7 @@ public class Entry extends HttpServlet
 
         out.println(outData);
 
+
         // To change body of created methods use File | Settings | File Templates.
     }    // returnDefaultPage
 
@@ -296,8 +315,6 @@ public class Entry extends HttpServlet
 	 */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
-
-
 
         String URI = getURI(request);
 

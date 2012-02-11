@@ -24,6 +24,9 @@ public class MySql implements DBAccess
     private String                  m_configLocation = "ServletPot.Config";
 
 
+	// global URI storage
+	private String[]				m_URIs = null;
+	
 
 	/*
 		destroy code
@@ -320,6 +323,10 @@ public class MySql implements DBAccess
                         preparedStatement.executeUpdate();
 
             }
+			else
+			{
+				m_URIs = null;
+			}
 
 
             // PreparedStatements can use variables and are more efficient
@@ -412,80 +419,7 @@ public class MySql implements DBAccess
     }
 
 
-    /*
-        write code for HTTP Post
-     */
-    public boolean writePost(String URI, String data, long hash, long len, long counter, String ip, String found)  throws SQLException
-    {
 
-        PreparedStatement preparedStatement = null;
-
-        try
-        {
-
-            // PreparedStatements can use variables and are more efficient
-            preparedStatement = m_con.prepareStatement("insert into " + m_databasePreBlock + "Posts values (default, ?, ?, ?, ?, ?, ?, ?)");
-
-            // init fields
-            preparedStatement.setString(1, URI);
-            preparedStatement.setString(2, data);
-            preparedStatement.setLong(3, hash);
-            preparedStatement.setLong(4, len);
-            preparedStatement.setLong(5, counter);
-
-            preparedStatement.setString(7, ip);
-            preparedStatement.setString(6, found);
-
-            // save data
-            preparedStatement.executeUpdate();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.toString());
-
-            return false;
-        }
-        finally
-        {
-            if (preparedStatement != null) preparedStatement.close();
-        }
-
-        return true;
-
-    }   // writePost
-
-
-        public boolean writeGet(String URI, long hash, long len, String ip, String found)
-    {
-
-        PreparedStatement preparedStatement;
-
-        try
-        {
-
-            // PreparedStatements can use variables and are more efficient
-            preparedStatement = m_con.prepareStatement("insert into " + m_databasePreBlock + "Gets values (default, ?, ?, ?, ?, ?)");
-
-            // init fields
-            preparedStatement.setString(1, URI);
-            preparedStatement.setLong(2, hash);
-            preparedStatement.setLong(3, len);
-            preparedStatement.setString(4, found);
-            preparedStatement.setString(5, ip);
-
-            // save data
-            preparedStatement.executeUpdate();
-        }
-        catch (Exception e)
-        {
-            System.out.println(e.toString());
-
-            return false;
-        }
-
-        return true;
-
-    }   // writeGet
 
 
     public void deleteURI(String line)
@@ -646,6 +580,12 @@ public class MySql implements DBAccess
         Hashtable strings = new Hashtable();
         int counter = 0;
         String[] output = null;
+		
+		if (m_URIs != null)
+		{	
+		    System.out.println("Info: Returning data from cache....");
+			return m_URIs;
+		}
 
         try
         {
@@ -690,7 +630,9 @@ public class MySql implements DBAccess
             output[0]="BANGLE";
         }
 
-        return output;
+		// store saved data
+        m_URIs = output;
+		return output;
     }   // getURI
 
 }

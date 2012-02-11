@@ -330,35 +330,6 @@ public class Redis implements DBAccess
 	}
 
 
-	/*
-			write code for HTTP Post
-		 */
-	public boolean writePost(String URI, String data, long hash, long len, long counter, String ip, String found) throws SQLException
-	{
-		if (URI == null)
-			return false;
-
-		// fix bogus URI
-		if (URI.startsWith("//"))
-			URI = URI.substring(1);
-
-		if (URI.startsWith("/%20%20/"))
-			URI = URI.substring(7);
-
-
-		String nr = m_con.get("POST_" + URI);
-		if (nr == null)
-		{
-			m_con.set("POST_" + URI, "1");
-		}
-		else
-		{
-			m_con.incr("POST_" + URI);
-		}
-
-
-		return true;
-	}   // writePost
 
 
 	/**

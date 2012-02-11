@@ -17,23 +17,10 @@ public interface DBAccess
 
     public boolean writeURI(String URI, long hash, long len, long counter, int reqNr);
 
-    public boolean writePost(String URI, String data, long hash, long len, long counter, String ip, String found) throws SQLException;
-
-    public boolean writeGet(String URI, long hash, long len, String ip, String found);
-
-    public boolean writeIP(String ip);
-
     public int getCounter();
 
     public boolean increaseCounter();
 
-    public int getNumberOfGets() throws SQLException;
-   
-    public int getNumberOfPosts() throws SQLException;
-
-    public String[] getLastGets(int history) throws SQLException;
-
-    public String[] getLastPosts(int history) throws SQLException;
 
     public String[] getURI();
 
