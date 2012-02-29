@@ -4,6 +4,8 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 import org.metams.ServletPot.Database.Redis;
 import redis.clients.jedis.Jedis;
 
+import java.util.List;
+
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,7 +27,7 @@ public class JedisTest
         x.writeURI("index.php", 0x42424242, 100, 1, 2);
         x.writeURI("index.html", 0x42424243, 100, 1, 2);
 
-        String x2[] = x.getURI();
+        List x2 = x.getURI();
 
     }
 

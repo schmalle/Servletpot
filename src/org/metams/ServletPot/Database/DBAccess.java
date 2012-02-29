@@ -1,6 +1,7 @@
 package org.metams.ServletPot.Database;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * User: flake
@@ -21,8 +22,7 @@ public interface DBAccess
 
     public boolean increaseCounter();
 
-
-    public String[] getURI();
+    public List getURI();
 
     public void deleteURI(String line);
 

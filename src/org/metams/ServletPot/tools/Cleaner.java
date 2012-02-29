@@ -3,6 +3,8 @@ package org.metams.ServletPot.tools;
 import org.metams.ServletPot.Database.DBAccess;
 import org.metams.ServletPot.Database.MySql;
 
+import java.util.List;
+
 
 /**
  * User: flake
@@ -18,7 +20,7 @@ public class Cleaner
 {
 
     private DBAccess m_db = null;
-    private String[] m_attackStrings = null;
+    private List m_attackStrings = null;
 
 
     public static void main(String[] args)
@@ -83,10 +85,10 @@ public class Cleaner
 
 
         // scan all lines
-        for (int runner = 0; runner <= m_attackStrings.length -1; runner++)
+        for (int runner = 0; runner <= m_attackStrings.size() -1; runner++)
         {
-            String origLine = m_attackStrings[runner];
-            String line = m_attackStrings[runner];
+            String origLine = (String)m_attackStrings.get(runner);
+            String line = (String)m_attackStrings.get(runner);
             while (line.startsWith("//"))
             {
                 line = line.substring(1);

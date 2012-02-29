@@ -25,9 +25,6 @@ public class MySqlHibernate implements DBAccess
 {
 	private Logger m_l = null;
 
-	// variable
-	private String m_databasePreBlock = "ServletPot.";
-	private String m_configLocation = "ServletPot.Config";
 
 	SessionFactory sf = new HibernateUtil().getSessionFactory();
 	Session session = sf.openSession();
@@ -90,11 +87,15 @@ public class MySqlHibernate implements DBAccess
 	private long getCounter(long hash, long len, String DB)
 	{
 		session = sf.openSession();
+
 		Query query = session.createQuery("SELECT cust.counter as COUNTER FROM org.metams.ServletPot.Database.Hibernate.Hibernate" + DB + " AS cust WHERE cust.hash=" + hash + " AND cust.length=" + len);
 		java.util.List counterList = query.list();
 
+		session.close();
+
 		Long counterInteger = (Long) counterList.get(0);
 		long counter = counterInteger.longValue();
+
 		return counterInteger.longValue();
 	}
 
@@ -120,11 +121,11 @@ public class MySqlHibernate implements DBAccess
 		if (URI.startsWith("/%20%20/"))
 			URI = URI.substring(7);
 
+		session = sf.openSession();
 
 		// if the URI exists, just increase the counter
 		if (existsURI(hash, len, reqNr))
 		{
-			session = sf.openSession();
 			Query query = session.createQuery("SELECT cust.counter as COUNTER FROM org.metams.ServletPot.Database.Hibernate.HibernateURI AS cust WHERE cust.hash=" + hash + " AND cust.length=" + len);
 			java.util.List counterList = query.list();
 
@@ -143,6 +144,7 @@ public class MySqlHibernate implements DBAccess
 		transaction = session.beginTransaction();
 		session.save(newURI);
 		transaction.commit();
+		session.close();
 
 		return true;
 
@@ -158,11 +160,23 @@ public class MySqlHibernate implements DBAccess
 	{
 
 		session = sf.openSession();
+
 		Query query = session.createQuery("SELECT cust.counter as COUNTER FROM org.metams.ServletPot.Database.Hibernate.HibernateConfig AS cust ");
 		java.util.List counterList = query.list();
 
-		Long counterInteger = (Long) counterList.get(0);
-		return counterInteger.intValue();
+		//session.close();
+
+		session.close();
+		if (counterList.size() != 0)
+		{
+			Long counterInteger = (Long) counterList.get(0);
+
+
+			return counterInteger.intValue();
+		}
+
+
+		return 0;
 	}   // getCounter
 
 
@@ -172,8 +186,13 @@ public class MySqlHibernate implements DBAccess
 	public boolean increaseCounter()
 	{
 
+
 		int counter = getCounter();
+
+
 		executeHibernateQuery("DELETE FROM org.metams.ServletPot.Database.Hibernate.HibernateConfig WHERE counter <" + counter + 1);
+
+		session = sf.openSession();
 
 		HibernateConfig newURI = new HibernateConfig();
 		newURI.setcounter(counter + 1);
@@ -181,6 +200,7 @@ public class MySqlHibernate implements DBAccess
 		transaction = session.beginTransaction();
 		session.save(newURI);
 		transaction.commit();
+		session.close();
 
 		return true;
 	}
@@ -193,9 +213,11 @@ public class MySqlHibernate implements DBAccess
 	 */
 	public void executeHibernateQuery(String sqlQuery)
 	{
-		session = sf.openSession(); //Session();
+		session = sf.openSession();
+
 		Query query = session.createQuery(sqlQuery);
 		int row = query.executeUpdate();
+		session.close();
 
 	}
 
@@ -229,11 +251,15 @@ public class MySqlHibernate implements DBAccess
 	 */
 	public void deleteURI(String line)
 	{
-		String hql = "delete from " + m_databasePreBlock + "URIs WHERE URI= :URI";
+
+		session = sf.openSession();
+
+		String hql = "delete from org.metams.ServletPot.Database.Hibernate.HibernateURI URIs WHERE URI= :URI";
 		Query query = session.createQuery(hql);
 		query.setString("URI", line);
 
 		int row = query.executeUpdate();
+		session.close();
 		// return true;
 	}
 
@@ -249,6 +275,7 @@ public class MySqlHibernate implements DBAccess
 	 */
 	public boolean writeFile(long len, long crc32, long counter, int reqNr)
 	{
+		session = sf.openSession();
 
 		if (len == 0)
 			return true;
@@ -273,6 +300,7 @@ public class MySqlHibernate implements DBAccess
 		transaction = session.beginTransaction();
 		session.save(newURI);
 		transaction.commit();
+		session.close();
 
 		return true;
 	}
@@ -289,6 +317,7 @@ public class MySqlHibernate implements DBAccess
 	public Boolean exists(long hash, long len, String table, String outputName, int reqNr)
 	{
 		session = sf.openSession();
+
 		Query query = session.createQuery("SELECT cust.id as ID FROM org.metams.ServletPot.Database.Hibernate." + table + " AS cust WHERE cust.hash=" + hash + " AND cust.length=" + len);
 
 		boolean result = (query.uniqueResult() != null);
@@ -298,6 +327,7 @@ public class MySqlHibernate implements DBAccess
 			m_l.log("Info: " + outputName + " exists with CRC: " + hash + "and len: " + len, reqNr);
 		}
 
+		session.close();
 		return result;
 	}
 
@@ -335,8 +365,10 @@ public class MySqlHibernate implements DBAccess
 	 *
 	 * @return
 	 */
-	public String[] getURI()
+	public java.util.List getURI()
 	{
+
+		session = sf.openSession();
 
 		Hashtable strings = new Hashtable();
 		int counter = 0;
@@ -345,17 +377,8 @@ public class MySqlHibernate implements DBAccess
 
 		java.util.List results = session.createQuery("select e.uri AS URI from org.metams.ServletPot.Database.Hibernate.HibernateURI AS e ").list();
 
-		System.out.println(results.size());
-
-		output = new String[results.size()];
-
-		for (int runner = 0; runner <= results.size() - 1; runner++)
-		{
-			output[runner] = (String) results.get(runner);
-			//System.out.println((String) results.get(runner));
-		}
-
-		return output;
+		session.close();
+		return results;
 	}   // getURI
 
 }

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.*;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -445,12 +446,13 @@ public class Redis implements DBAccess
 	 *
 	 * @return
 	 */
-	public String[] getURI()
+	public java.util.List getURI()
 	{
 
+		List x = new LinkedList();
 		String nr = m_con.get("URI_COUNTER");
 		if (nr == null)
-			return null;
+			return x;
 
 		List uri = m_con.lrange("URI", 0, new Integer(nr).intValue());
 
@@ -464,11 +466,11 @@ public class Redis implements DBAccess
 		while (iterator.hasNext())
 		{
 			String element = iterator.next();
-			buffer[runner++] = element;
+			x.add(element);
 		}
 
+		return x;
 
-		return buffer;
 
 	}   // getURI
 

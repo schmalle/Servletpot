@@ -12,7 +12,6 @@ import org.metams.ServletPot.plugins.http.PHPHandler;
 import org.metams.ServletPot.tools.Utils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
@@ -193,7 +192,6 @@ public class VulnEmulator
      *   @in: reqNr - number of request
      *   @out: null if nothing found
      */
-
     private String checkForNewAttack(HttpServletRequest request, String URI, int reqNr)
     {
         Enumeration paramNames = request.getParameterNames();
@@ -271,6 +269,8 @@ public class VulnEmulator
 			index = URI.length();
 		}
 
+		//TODO normalize hiere even more
+
 		return URI.substring(0, index);
 
 	}   // shorten URI
@@ -288,7 +288,6 @@ public class VulnEmulator
         {
 
 	        TimeZone.setDefault(TimeZone.getTimeZone(m_config.getTimeZone()));
-
 
             if (m_config.getUseSend())
             {
@@ -386,7 +385,6 @@ public class VulnEmulator
 
         return handleDedicated(uriLow);
 
-
     }   // attackCheck
 
 
@@ -470,10 +468,6 @@ public class VulnEmulator
         
 
         return null;
-
-            
-
-
     }   // handleDedicated
 
 

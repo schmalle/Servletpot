@@ -5,7 +5,8 @@ import org.metams.ServletPot.plugins.Logger;
 
 import java.sql.*;
 import java.util.Hashtable;
-
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
@@ -574,18 +575,10 @@ public class MySql implements DBAccess
         returns the given URI
      */
 
-    public String[] getURI()
+    public java.util.List getURI()
     {
 
-        Hashtable strings = new Hashtable();
-        int counter = 0;
-        String[] output = null;
-		
-		if (m_URIs != null)
-		{	
-		    System.out.println("Info: Returning data from cache....");
-			return m_URIs;
-		}
+        List strings = new LinkedList();
 
         try
         {
@@ -603,9 +596,7 @@ public class MySql implements DBAccess
                 if (x!= null && x.startsWith("//"))
                     x = x.substring(1);
                 
-
-                strings.put(counter++, x);
-                // System.out.println(rSet.getString(1));
+				strings.add(x);
             }
 
             rSet.close();
@@ -615,24 +606,7 @@ public class MySql implements DBAccess
             System.out.println("existsFile: Exception");
         }
 
-        if (counter != 0)
-        {
-            output = new String[counter];
-            for (int runner = 0; runner <= counter - 1; runner++)
-            {
-                output[runner] = (String) strings.get(runner);
-            }
-
-         }
-        else
-        {
-            output = new String[1];
-            output[0]="BANGLE";
-        }
-
-		// store saved data
-        m_URIs = output;
-		return output;
+ 		return strings;
     }   // getURI
 
 }
