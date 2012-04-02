@@ -295,7 +295,16 @@ public class VulnEmulator
 
                 String y = x.format(new Date());
 
-                String message = m_send.getMessage(m_config.getCentralDBPassword(), m_config.getCentralDBUser(), ip, URI, y, attackType);
+
+				// small workaround for DTAG internal fancy stuff
+				String ident = "42";
+				if (!m_config.getCentralDBUser().equalsIgnoreCase("gtms"))
+				{
+					ident = m_config.getCentralDBUser();
+				}
+
+
+                String message = m_send.getMessage(m_config.getCentralDBPassword(), m_config.getCentralDBUser(), ip, URI, y, attackType, ident);
                 m_send.sendReport(message);
             }
         }
@@ -308,14 +317,21 @@ public class VulnEmulator
     }   // sendCentralDB
 
 
-    /*
-        checks for a possible attack pattern
-        @in:    parameter - parameter string to be parsed
-        @in:    URI       - URI contains
-     */
-
-    private String attackCheck(String parameter, String URI)
+	/**
+	 * checks for suspicious traces in parameters
+ 	 * @param parameter
+	 * @param URI
+	 * @return string or NULL
+	 */
+	private String attackCheck(String parameter, String URI)
     {
+
+		if (parameter == null)
+			return null;
+
+		if (URI == null)
+			return  null;
+
 
 	    String parLow = parameter.toLowerCase();
 	    String uriLow = URI.toLowerCase();
@@ -445,6 +461,8 @@ public class VulnEmulator
 							"/phpmyadmin-2.5.5-pl1/index.php", "Attack (Admin)",
 							"/phpmyadmin-2.5.6-rc2/index.php", "Attack (Admin)",
 							"/phpmyadmin-2.5.7/index.php", "Attack (Admin)",
+							"//wp-content/themes/deep-blue/cache/", "Attack (WP)",
+							"/wp-content/plugins/category-grid-view-gallery/includes/timthumb.php", "Attack (WP)",
 							"/wp-content/plugins/is-human/engine.php?action=log-reset&type=ih_options();eval(base64_decode(zwnobyanpgjypkpgcnlfjzsncmvjag8gjzxicj5bbmfzs2know));error", "Attack (WP)"
 
         };
