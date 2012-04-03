@@ -2,19 +2,14 @@ package org.metams.ServletPot.Database.Hibernate;
 
 
 import org.hibernate.Query;
-import org.hibernate.mapping.List;
-import org.metams.ServletPot.Database.DBAccess;
-import org.metams.ServletPot.plugins.Logger;
-
-import java.sql.*;
-import java.util.Hashtable;
-import java.util.Iterator;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.metams.ServletPot.Database.Hibernate.HibernateURI;
-import org.metams.ServletPot.Database.Hibernate.HibernateUtil;
+import org.metams.ServletPot.Database.DBAccess;
+import org.metams.ServletPot.plugins.Logger;
+
+import java.sql.SQLException;
+import java.util.Hashtable;
 
 /**
  * User: flake
@@ -134,6 +129,8 @@ public class MySqlHibernate implements DBAccess
 
 			executeHibernateQuery("DELETE FROM org.metams.ServletPot.Database.Hibernate.HibernateURI WHERE hash=" + hash + " AND length=" + len);
 		}
+
+		session = sf.openSession();
 
 		HibernateURI newURI = new HibernateURI();
 		newURI.setlength(len);
