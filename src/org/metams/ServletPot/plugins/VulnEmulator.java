@@ -303,7 +303,6 @@ public class VulnEmulator
 					ident = m_config.getCentralDBUser();
 				}
 
-
                 String message = m_send.getMessage(m_config.getCentralDBPassword(), m_config.getCentralDBUser(), ip, URI, y, attackType, ident);
                 m_send.sendReport(message);
             }
