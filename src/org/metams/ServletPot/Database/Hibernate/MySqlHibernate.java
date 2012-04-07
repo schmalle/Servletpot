@@ -22,9 +22,18 @@ public class MySqlHibernate implements DBAccess
 
 
 	SessionFactory sf = new HibernateUtil().getSessionFactory();
-	Session session = sf.openSession();
+	Session session = null; //sf.openSession();
 	Transaction transaction = null;
 
+
+	private Thread onShutdown=new Thread()
+	{
+
+		public void run()
+		{
+			System.out.println("My program just finished running!");
+		}
+	};
 
 	/*
 				destroy code
@@ -36,6 +45,13 @@ public class MySqlHibernate implements DBAccess
 	}   // destroy
 
 
+	protected void finalize() throws Throwable
+	{
+		int a = 1;
+		System.out.println("Des");
+	}
+
+
 	/**
 	 * Contructor for the MySQL class
 	 *
@@ -44,6 +60,8 @@ public class MySqlHibernate implements DBAccess
 	public MySqlHibernate(Logger l)
 	{
 		m_l = l;
+		Runtime.getRuntime().addShutdownHook(onShutdown);
+
 	}   // constructor for the MySql class
 
 
@@ -116,18 +134,23 @@ public class MySqlHibernate implements DBAccess
 		if (URI.startsWith("/%20%20/"))
 			URI = URI.substring(7);
 
-		session = sf.openSession();
 
 		// if the URI exists, just increase the counter
 		if (existsURI(hash, len, reqNr))
 		{
+
+			session = sf.openSession();
 			Query query = session.createQuery("SELECT cust.counter as COUNTER FROM org.metams.ServletPot.Database.Hibernate.HibernateURI AS cust WHERE cust.hash=" + hash + " AND cust.length=" + len);
+
 			java.util.List counterList = query.list();
+
+			session.close();
 
 			Long counterInteger = (Long) counterList.get(0);
 			counter = 1 + counterInteger.longValue();
 
 			executeHibernateQuery("DELETE FROM org.metams.ServletPot.Database.Hibernate.HibernateURI WHERE hash=" + hash + " AND length=" + len);
+
 		}
 
 		session = sf.openSession();
@@ -272,7 +295,6 @@ public class MySqlHibernate implements DBAccess
 	 */
 	public boolean writeFile(long len, long crc32, long counter, int reqNr)
 	{
-		session = sf.openSession();
 
 		if (len == 0)
 			return true;
@@ -294,6 +316,7 @@ public class MySqlHibernate implements DBAccess
 		newURI.setfound(d);
 		newURI.setcounter(counter);
 
+		session = sf.openSession();
 		transaction = session.beginTransaction();
 		session.save(newURI);
 		transaction.commit();
