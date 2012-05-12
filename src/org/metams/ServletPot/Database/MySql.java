@@ -227,8 +227,6 @@ public class MySql implements DBAccess
          }
          catch (Exception e)
          {
-
- //            if (statement != null) statement.close();
              e.printStackTrace();
              rSet.close();
          }
@@ -355,11 +353,16 @@ public class MySql implements DBAccess
     }   // writeURI
 
 
-
-
-    public int getCounter()
+	/**
+	 *
+	 * @return
+	 */
+	public int getCounter()
     {
         int x = 0;
+
+		if (m_con == null)
+			return 0;
 
          try
          {
@@ -384,7 +387,12 @@ public class MySql implements DBAccess
 
     }   // getCounter
 
-    public boolean increaseCounter()
+
+	/**
+	 *
+	 * @return
+	 */
+	public boolean increaseCounter()
     {
 
         PreparedStatement preparedStatement;
@@ -420,9 +428,10 @@ public class MySql implements DBAccess
     }
 
 
-
-
-
+	/**
+	 * deletes the URI
+	 * @param line
+	 */
     public void deleteURI(String line)
     {
         try
@@ -445,7 +454,15 @@ public class MySql implements DBAccess
     }
 
 
-    public boolean writeFile(long len, long crc32, long counter, int reqNr)
+	/**
+	 * write a file (data) to database
+	 * @param len
+	 * @param crc32
+	 * @param counter
+	 * @param reqNr
+	 * @return
+	 */
+	public boolean writeFile(long len, long crc32, long counter, int reqNr)
     {
         PreparedStatement preparedStatement;
 
@@ -545,7 +562,6 @@ public class MySql implements DBAccess
 
         boolean returnValue = false;
 
-
         try
         {
 
@@ -571,10 +587,10 @@ public class MySql implements DBAccess
     }   // existsFile
 
 
-    /*
-        returns the given URI
-     */
-
+	/**
+	 * returns the list of existing URIs
+	 * @return
+	 */
     public java.util.List getURI()
     {
 
@@ -583,11 +599,8 @@ public class MySql implements DBAccess
         try
         {
 
-            // Statements allow to issue SQL queries to the database
-            //java.sql.Statement statement = m_con.createStatement();
             String sqlQuery = "select uri from " + m_databasePreBlock + "URIs;";
             ResultSet rSet = m_statement.executeQuery(sqlQuery);
-
 
             while (rSet.next())
             {

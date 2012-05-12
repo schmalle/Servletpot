@@ -235,9 +235,12 @@ public class Robots
     "Allow: /alerts/manage"
     };
 
-    /*
-        return special data for the Robots.txt requests
-     */
+
+	/**
+	 *
+	 * @param out
+	 * @return
+	 */
     public boolean makeRobots(PrintWriter out)
     {
 
@@ -259,4 +262,32 @@ public class Robots
 
     return true;
     }
+
+	/**
+	 *
+	 * @param out
+	 * @return
+	 */
+    public boolean makeRobots(StringBuilder out)
+    {
+
+        java.util.Random r = new Random();
+
+
+         int waitTime = r.nextInt(10); //(int)(Math.random()*10000);
+
+        int runner = waitTime;
+
+        out.append("User-agent: *<br>");
+
+        while (runner <= m_robotBase.length - 1)
+        {
+            out.append(m_robotBase[runner] + "<br>");
+            runner+=waitTime;
+
+        }
+
+    return true;
+    }
+
 }

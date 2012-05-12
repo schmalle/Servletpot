@@ -114,11 +114,11 @@ public class Entry extends HttpServlet
 	}	// showDebugInfo
 
 
-	/*
-			returns the URI from a given HttpServletRequest
-			@in:    request
-			@out:   URI
-		 */
+	/**
+	 * returns the URI to a given request
+	 * @param request
+	 * @return
+	 */
 	private String getURI(HttpServletRequest request)
 	{
 		// construct full string incl parameters
@@ -274,12 +274,20 @@ public class Entry extends HttpServlet
 			{
 				if (!inserted && line.contains("<!-- FLK! -->"))
 				{
-					outData = outData.concat(insertLearnedCode(attackType, request));
-					line = "";
+
+					out.println(outData);
+
+					insertLearnedCode(attackType, request, out);
+					outData = "";
+
 					inserted = true;
 				}
+				else
+				{
+					out.println(line);
+				}
 
-				outData = outData.concat(line);
+				// ALT outData = outData.concat(line);
 			}
 
 			inReaderBuf.close();
@@ -292,7 +300,7 @@ public class Entry extends HttpServlet
 			inReader.close();
 		}
 
-		out.println(outData);
+		// out.println(outData);
 
 
 		// To change body of created methods use File | Settings | File Templates.
@@ -315,6 +323,8 @@ public class Entry extends HttpServlet
 		PrintWriter out = response.getWriter();
 
 		response.setContentType("text/html");
+
+		String host = request.getHeader("Host");
 
 		int reqNr = m_db.getCounter();
 		m_db.increaseCounter();
@@ -354,7 +364,7 @@ public class Entry extends HttpServlet
 
 		} else if (attackType != null)
 		{
-			m_emu.storeAttackForPost(request, attackType, URI, reqNr);
+			m_emu.storeAttackForPost(request, attackType, URI, reqNr, host);
 			String data = m_post.getEmulatedCode(reqNr);
 
 			out.print(data);
@@ -375,28 +385,26 @@ public class Entry extends HttpServlet
 	 * @param request
 	 * @return
 	 */
-	private String insertLearnedCode(String attackType, HttpServletRequest request)
+	private void insertLearnedCode(String attackType, HttpServletRequest request, PrintWriter outWriter)
 	{
 
-		String out = "";
-		List strings = null;
 
 		DBAccess db = m_emu.getDatabase();
-		strings = db.getURI();
+		List strings = db.getURI();
 
 
 		for (int runner = 0; strings != null && runner <= strings.size()  - 1; runner++)
 		{
 			String temp = (String)strings.get(runner);
 
-			if (temp != null)
-				out = out.concat(temp.concat("<br>"));
+			// NEU
+			outWriter.println(temp + "<br>");
+
 		}
 
-		return out;
-	}   // insertLearnedCode
-
-
+		// deallocate strings
+		strings = null;
+	}
 }
 
 

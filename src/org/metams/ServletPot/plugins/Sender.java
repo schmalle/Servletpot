@@ -11,11 +11,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.*;
+import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.Key;
+import java.security.KeyStore;
+import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
@@ -32,6 +34,7 @@ public class Sender
     private String m_url = null;
 	private Logger m_logger = null;
 
+
 	/**
 	 * constructor for the Sender class
 	 * @param url
@@ -44,16 +47,23 @@ public class Sender
     }
 
 
-    /*
-        returns the string to be send to the host
-     */
-
-    public String getMessage(String token, String userName, String ip, String req, String time, String attackType) throws UnsupportedEncodingException
+	/**
+	 * returns the message to be send to the server
+	 * @param token
+	 * @param userName
+	 * @param ip
+	 * @param req
+	 * @param time
+	 * @param attackType
+	 * @param ident
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public String getMessage(String token, String userName, String ip, String req, String time, String attackType, String ident, String host) throws UnsupportedEncodingException
     {
 
+
         req = URLEncoder.encode(req, "UTF-8");
-        //attackType = URLEncoder.encode(attackType, "UTF-8");
-        attackType = "WEBBASSED";
 
         String message =
 
@@ -62,15 +72,15 @@ public class Sender
                         "                <username>" + userName + "</username>\n" +
                         "                <token>" + token + "</token>\n" +
                         "        </Authentication>\n" +
-                        "        <Alert messageid=\"www.emailplaceng.de\">\n" +
-                        "            <Analyzer id=\"42\" name=\"www.emailplaceng.de\"/>     \n" +
+                        "        <Alert messageid=\""+ host +"\">\n" +
+                        "            <Analyzer id=\""+ident+"\" name=\""+ host +"\"/>     \n" +
                         "                <CreateTime tz=\"0100\">"+ time +"</CreateTime>                                  \n" +
                         "                <Source>\n" +
                         "                        <Node>\n" +
                         "                                <Address category=\"ipv4-addr\"><address>" + ip + "</address></Address>       \n" +
                         "                        </Node>\n" +
                         "                </Source>                                      \n" +
-                        "                <Target ident=\"www.emailplaceng.de\">                           \n" +
+                        "                <Target ident=\""+ host +"\">                           \n" +
                         "                        <Node>\n" +
                         "                                <Address category=\"ipv4-addr\">"+ ip +"</Address>             \n" +
                         "                        </Node>\n" +
@@ -78,7 +88,7 @@ public class Sender
                         "                                <dport>80</dport>\n" +
                         "                        </Service>\n" +
                         "                </Target>\n" +
-                        "                <Classification origin=\"vendor-specific\" ident=\"flk-01\" text=\"webserver bot\"/> \n" +
+                        "                <Classification origin=\""+attackType+"\" ident=\""+ attackType +"\" text=\""+ attackType+"\"/> \n" +
                         "                <AdditionalData type=\"string\" meaning=\"user-agent\">Mozilla/5.0</AdditionalData>    \n" +
                         "                <AdditionalData type=\"string\" meaning=\"header\">"+ attackType +"</AdditionalData>  \n" +
                         "                <AdditionalData type=\"string\" meaning=\"request\">"+ req +"</AdditionalData>\n" +
@@ -90,7 +100,12 @@ public class Sender
     }     // getMessage
 
 
-    public DefaultHttpClient getFake(DefaultHttpClient httpClient)
+	/**
+	 *
+	 * @param httpClient
+	 * @return
+	 */
+	public DefaultHttpClient getFake(DefaultHttpClient httpClient)
     {
         try
         {
@@ -116,13 +131,14 @@ public class Sender
                 }
             };
 
+
             // Now put the trust manager into an SSLContext.
-            SSLContext sslcontext = SSLContext.getInstance("TLS");
-            sslcontext.init(null, new TrustManager[]{trustManager}, null);
+            SSLContext sslcontext = SSLContext.getInstance("SSL");
+            sslcontext.init(null, new TrustManager[]{trustManager}, new SecureRandom());
 
             // Use the above SSLContext to create your socket factory
             // (I found trying to extend the factory a bit difficult due to a
-            // call to createSocket with no arguments, a method which doesn't
+            // call to createSocket with no arguments, a method which doesn'< ></>
             // exist anywhere I can find, but hey-ho).
             SSLSocketFactory sf = new SSLSocketFactory(sslcontext);
             sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
@@ -143,6 +159,8 @@ public class Sender
         }
         catch (Throwable t)
         {
+
+			t.printStackTrace();
             // AND NEVER EVER EVER DO THIS, IT IS LAZY AND ALMOST ALWAYS WRONG!
             System.out.println("Servletplot.plugins.sender: Error in ssl handling");
             return null;
@@ -170,13 +188,12 @@ public class Sender
             method.setEntity(strent);
             ResponseHandler<String> response = new BasicResponseHandler();
 
-
             String returnCode = client.execute(method, response);
 	        if (returnCode != null && !returnCode.contains("<StatusCode>OK</StatusCode>"))
 	        {
-		    	m_logger.log("Error in sending data to central database", 42);
+		    	if (m_logger!= null)
+					m_logger.log("Error in sending data to central database", 42);
 	        }
-
 
         }
         catch (Exception e)
@@ -184,8 +201,7 @@ public class Sender
             System.err.println(e);
         }
 
-
-    }
+    }	// sendReport
 
 
 }

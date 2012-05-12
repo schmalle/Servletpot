@@ -40,11 +40,11 @@ public class SenderTest
 		try
 		{
 			Sender x = new Sender("https://www.t-sec-radar.de/ews-0.1/alert/postSimpleMessage", null);
-			String message = x.getMessage("pw",
-					"kippo-uni-bonn",
+			String message = x.getMessage("xyz",
+					"abc",
 					"127.0.0.1",
-					"--TEST--",
-					y, "--NO ATTACK--", "kippo-uni-bonn");
+					"--TEST--2",
+					y, "--NO ATTACK--2", "abc", "testhost");
 
 			System.out.println(message);
 			x.sendReport(message);

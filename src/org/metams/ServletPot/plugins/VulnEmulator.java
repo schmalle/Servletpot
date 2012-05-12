@@ -58,7 +58,7 @@ public class VulnEmulator
         stores the attack data for POST requests
      */
 
-    public void storeAttackForPost(HttpServletRequest request, String attackType, String URI, int reqNr)
+    public void storeAttackForPost(HttpServletRequest request, String attackType, String URI, int reqNr, String host)
     {
         // check for data
         if (attackType == null)
@@ -80,7 +80,7 @@ public class VulnEmulator
         m_l.log("Info: " + attackTypeMini + "from IP: " + ip + " at time " + new Date().toString() + " and user-agent: "+ request.getHeader("User-Agent") +" and request " + URI, reqNr);
         
 
-        sendCentralDB(ip, URI, attackType);
+        sendCentralDB(ip, URI, attackType, host);
 
     }   // storeAttackForPost
 
@@ -198,6 +198,7 @@ public class VulnEmulator
         String attackType = null;
         String ip = m_utils.getIP(request);
         String method = request.getMethod();
+		String host = request.getHeader("Host");
 
         if (paramNames != null)
         {
@@ -229,7 +230,7 @@ public class VulnEmulator
 
 	                        m_l.log(null, "Info: " + attackType + "from IP: " + ip.substring(0,4) + ".Y.Z at time " + new Date().toString() + " ", reqNr);
 
-                            sendCentralDB(ip, URI, attackType);
+                            sendCentralDB(ip, URI, attackType, host);
 
                             return attackType;
                         }   // if
@@ -282,7 +283,7 @@ public class VulnEmulator
 	 * @param URI
 	 * @param attackType
 	 */
-    private void sendCentralDB(String ip, String URI, String attackType)
+    private void sendCentralDB(String ip, String URI, String attackType, String host)
     {
         try
         {
@@ -295,15 +296,8 @@ public class VulnEmulator
 
                 String y = x.format(new Date());
 
+                String message = m_send.getMessage(m_config.getCentralDBPassword(), m_config.getCentralDBUser(), ip, URI, y, attackType, m_config.getCentralDBUser(), host);
 
-				// small workaround for DTAG internal fancy stuff
-				String ident = "42";
-				if (!m_config.getCentralDBUser().equalsIgnoreCase("gtms"))
-				{
-					ident = m_config.getCentralDBUser();
-				}
-
-                String message = m_send.getMessage(m_config.getCentralDBPassword(), m_config.getCentralDBUser(), ip, URI, y, attackType, ident);
                 m_send.sendReport(message);
             }
         }
