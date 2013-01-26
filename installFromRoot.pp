@@ -92,9 +92,16 @@ exec { "Set MySQL server root password":
     command => "mysqladmin -uroot password $password",
 }
 
+exec { "Create Kippo DB":
+    path => "/bin:/usr/bin",
+    command => "mysqladmin -u root create kippo",
+}
 
 
-Package['openjdk-7-jdk'] -> Package['mysql-server'] -> Exec['Set MySQL server root password'] -> User['honeypot'] -> File["/home/honeypot/tools"] -> Package['tomcat7'] -> Package['mono-complete'] -> Package['git'] -> Package['authbind'] ->Package['python-twisted'] -> Package['nano'] -> Package['joe'] -> Package['subversion'] -> Package['ant'] -> Package['nant']
+
+Package['openjdk-7-jdk'] -> Package['mysql-server'] -> Exec['Set MySQL server root password'] -> User['honeypot'] -> File["/home/honeypot/tools"] -> Package['tomcat7'] -> Package['mono-complete'] -> Package['git'] -> Package['authbind'] ->Package['python-twisted'] -> Package['nano'] -> Package['joe'] -> Package['subversion'] -> Package['ant'] -> Package['nant'] -> Exec["Create Kippo DB"]
+
+
 
 
 
