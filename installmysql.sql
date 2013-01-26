@@ -1,4 +1,4 @@
-DROP DATABASE ServletPot;
+DROP DATABASE IF EXISTS ServletPot;
 CREATE DATABASE ServletPot;
 
 use ServletPot;
