@@ -1,3 +1,19 @@
-java -classpath /opt/servletpot/antlr-2.7.7.jar:/opt/servletpot/bcprov-jdk15on-147.jar:/opt/servletpot/commons-collections-3.2.1.jar:/opt/servletpot/commons-logging-1.1.1.jar:/opt/servletpot/commons-pool-1.5.6.jar:/opt/servletpot/cos.jar:/opt/servletpot/dom4j-1.6.1.jar:/opt/servletpot/dsn.jar:/opt/servletpot/hibernate-commons-annotations-4.0.1.Final.jar:/opt/servletpot/hibernate-core-4.0.1.Final.jar:/opt/servletpot/hibernate-entitymanager-4.0.1.Final.jar:/opt/servletpot/hibernate-envers-4.0.1.Final.jar:/opt/servletpot/hibernate-jpa-2.0-api-1.0.1.Final.jar:/opt/servletpot/httpclient-4.0.1.jar:/opt/servletpot/httpcore-4.0.1.jar:/opt/servletpot/httpcore-nio-4.0.1.jar:/opt/servletpot/httpmime-4.0.1.jar:/opt/servletpot/javassist-3.15.0-GA.jar:/opt/servletpot/jboss-logging-3.1.0.CR2.jar:/opt/servletpot/jboss-transaction-api_1.1_spec-1.0.0.Final.jar:/opt/servletpot/jedis-2.0.0.jar:/opt/servletpot/mail.jar:/opt/servletpot/mailapi.jar:/opt/servletpot/mysql.jar:/opt/servletpot/smtp.jar:/opt/servletpot/twitter4j-core-2.2.1.jar:/opt/servletpot/servletpot.jar:/opt/servletpot/netty-3.4.2.Final.jar:/opt/servletpot/NettyExtension-1.1.12.jar org.metams.ServletPot.netty.Server /opt/servletpot/config.txt /opt/servletpot/index.html
+var_defined()
+{
+    local var_name=$1
+    set | grep "^${var_name}=" 1>/dev/null
+    return $?
+}
+
+if var_defined JAVA_HOME; then
+    echo "JAVA_HOME is defined"
+else
+    export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+fi
+
+echo "Contents of JAVA_HOME " $JAVA_HOME
+
+cd $HOME/tools/apache-tomcat-7.0.34/bin
+./startup.sh
 
 

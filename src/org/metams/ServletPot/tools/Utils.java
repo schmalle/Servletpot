@@ -2,6 +2,8 @@ package org.metams.ServletPot.tools;
 
 import org.metams.ServletPot.ConfigHandler;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,6 +20,25 @@ public class Utils
 
     private ConfigHandler m_cf = null;
 
+
+	/**
+	 * returns an AppServer Variable
+	 * @param name
+	 * @return
+	 */
+	public String getAppServerVariable(String name)
+	{
+		try
+		{
+			Context ctx = new InitialContext();
+			String myVar = (String) ctx.lookup( "java:comp/env/" + name );
+			return myVar;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}   // getAppServerVariable
 
     /*
         returns the IP adress of the caller

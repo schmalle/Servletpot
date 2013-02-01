@@ -68,7 +68,15 @@ public class Entry extends HttpServlet
 	{
 		if (!m_page)
 		{
-			m_configFile = config.getServletContext().getRealPath(File.separator) + "WEB-INF/config.txt";
+			m_utils = new Utils(null);
+			m_configFile = m_utils.getAppServerVariable("SERVLETPOT_HOME");
+			if (m_configFile == null)
+				m_configFile = config.getServletContext().getRealPath(File.separator) + "WEB-INF/config.txt";
+			else
+				m_configFile = m_configFile + "/config.txt";
+
+			System.out.println("Info: Using configfile " + m_configFile + " for Servletpot....");
+
 			m_configHandler = new ConfigHandler(m_configFile);
 
 			// read Config lines
@@ -76,7 +84,17 @@ public class Entry extends HttpServlet
 			m_utils = new Utils(m_configHandler);
 			m_l = new Logger(m_configHandler.getLogPath(), true, m_configHandler, m_utils);
 
-			m_defaultPage = config.getServletContext().getRealPath(File.separator) + "WEB-INF/index.html";
+			m_defaultPage = m_utils.getAppServerVariable("SERVLETPOT_HOME");
+
+			if (m_defaultPage == null)
+				m_defaultPage = config.getServletContext().getRealPath(File.separator) + "WEB-INF/index.html";
+			else
+				m_defaultPage = m_defaultPage + "/index.html";
+
+
+			System.out.println("Info: Using html file " + m_defaultPage + " for Servletpot....");
+
+
 			m_page = false;
 
 			// Todo Fix

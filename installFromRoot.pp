@@ -1,5 +1,5 @@
 #
-# install all dependencies for Servletpot
+# install all dependencies for Servletpot and kippo
 # tested on ubuntu
 #
 

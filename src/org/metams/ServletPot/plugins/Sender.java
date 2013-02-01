@@ -191,9 +191,17 @@ public class Sender
             String returnCode = client.execute(method, response);
 	        if (returnCode != null && !returnCode.contains("<StatusCode>OK</StatusCode>"))
 	        {
-		    	if (m_logger!= null)
+				System.out.println("Info: Send NOT data to central db");
+
+
+
+				if (m_logger!= null)
 					m_logger.log("Error in sending data to central database", 42);
 	        }
+			else
+			{
+				System.out.println("Info: Send data to central db");
+			}
 
         }
         catch (Exception e)

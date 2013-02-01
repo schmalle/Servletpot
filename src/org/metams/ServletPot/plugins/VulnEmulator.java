@@ -215,6 +215,9 @@ public class VulnEmulator
                         if ((parameter != null) && (attackType = attackCheck(parameter, URI)) != null)
                         {
 
+							// send data to CSIRT
+							new CSIRTReport().sendReport(URI);
+
 							URI = shortenURI(URI, parameter);
 							long hash =  m_utils.getCRC32(URI, false);
 							
