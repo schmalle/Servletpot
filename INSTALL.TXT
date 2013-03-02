@@ -77,6 +77,12 @@ Change the noanswer field in the configuration file to an appropriate value:
 
 noanswer=/your_nagios_request
 
+Make the variable SERVLETPOT_HOME visible to the appserver.
+
+Like this: <Environment name="SERVLETPOT_HOME" value="/Users/flake/config_servletpot" type="java.lang.String"/>
+
+Servletpot will then look into the directory and searches for the files index.html and config.txt for
+the config files.
 
 
 

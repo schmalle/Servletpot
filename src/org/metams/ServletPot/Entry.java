@@ -21,7 +21,6 @@ import org.metams.ServletPot.plugins.http.Robots;
 import org.metams.ServletPot.tools.Utils;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
 
 public class Entry extends HttpServlet
